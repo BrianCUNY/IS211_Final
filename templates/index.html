@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Bri-brary</title>
+</head>
+<body>
+{% extends "header.html" %}
+{% block content %}
+	{% if not session.logged_in %}
+	<p>Create your own library using Bri-brary!</p>
+	<p>Find your books by ISBN and utilize our tools to manage your library.</p>
+	<p>Please <a href="/login">Login</a> to continue using Bri-brary.</p>
+	{% else %}
+		<h2 style="text-align:center">Your Library</h2>
+		<table style="text-align:center">
+			<tr style="text-align:center">
+				<td>Book Image</td>
+				<td>ISBN</td>
+				<td>Title</td>
+				<td>Author</td>
+				<td>Page Count</td>
+				<td>Average Rating</td>
+				<td>Delete</td>
+			</tr>
+{% for book in books %}
+<tr style="text-align:center">
+	<td>{% if book.thumbnail %}<img src="{{ book.thumbnail }}">{% endif % }</td>
+	<td>{{ book.isbn }}</td>
+	<td>{{ book.title }}</td>
+	<td>{{ book.author }}</td>
+	<td>{{ book.pagecount  }}</td>
+	<td>{{ book.averagerating  }}</td>
+	<td><a href="/delete>id={{ book.id }}">Delete</a></td>
+</tr>
+{% else %}
+	<tr>
+	<td colspan="2" style="text=align:center">There are 0 books in your library.</td>
+	<td style="text-align:center"> Use <a href="/lookup">book search</a>to add books.</td>
+	</tr>
+{% endfor %}			
+</table>
+{% endif %}
+</body>
+{% endblock %}
